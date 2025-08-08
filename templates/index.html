@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card shadow-sm">
+      <div class="card-body text-center">
+        <h2 class="card-title mb-4">Hoşgeldin, {{ user.username }}!</h2>
+        <p class="lead">Bu sayfada trading bot testlerin için ileride bir arayüz göreceksin.</p>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger mt-3">Çıkış Yap</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

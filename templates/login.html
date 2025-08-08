@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Arka plan efekti -->
+<div class="bg-dark-gradient"></div>
+
+<div class="min-vh-100 d-flex align-items-center justify-content-center">
+  <div class="login-card glassmorph p-5 rounded-4 shadow-lg" style="max-width: 420px; width: 100%;">
+
+    <h3 class="mb-4 text-center fw-bold text-white">
+      Yatırım Paneline Giriş
+    </h3>
+
+    <form method="post">
+      <!-- E-Posta -->
+      <div class="form-group mb-4">
+        <label class="form-label text-light">E-Posta</label>
+        <div class="input-icon">
+          <i class="bi bi-envelope-at"></i>
+          <input type="email" name="email" class="form-control modern-input" placeholder="example@mail.com" required>
+        </div>
+      </div>
+
+      <!-- Şifre -->
+      <div class="form-group mb-4">
+        <label class="form-label text-light">Şifre</label>
+        <div class="input-icon">
+          <i class="bi bi-lock-fill"></i>
+          <input type="password" name="password" class="form-control modern-input" placeholder="••••••••" required>
+        </div>
+      </div>
+
+      <!-- Giriş Butonu -->
+      <button type="submit" class="btn gradient-btn w-100 fw-semibold">Giriş Yap</button>
+    </form>
+
+    <!-- Kayıt Ol -->
+    <p class="mt-4 text-center text-light small">
+      Hesabın yok mu?
+      <a href="{{ url_for('register') }}" class="text-success text-decoration-none fw-semibold">Kayıt Ol</a>
+    </p>
+
+  </div>
+</div>
+
+<!-- Gelişmiş CSS -->
+<style>
+  .bg-dark-gradient {
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh; width: 100vw;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    z-index: -1;
+  }
+
+  .glassmorph {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .input-icon {
+    position: relative;
+  }
+
+  .input-icon i {
+    position: absolute;
+    top: 50%; left: 12px;
+    transform: translateY(-50%);
+    color: #ccc;
+    font-size: 1rem;
+  }
+
+  .modern-input {
+    padding-left: 36px;
+    border-radius: 10px;
+    background-color: #1c1c1c;
+    color: white !important;
+    border: 1px solid #444;
+    transition: all 0.3s ease;
+  }
+
+  .modern-input:focus {
+    border-color: #00ffa3;
+    box-shadow: 0 0 0 2px rgba(0, 255, 163, 0.3);
+    background-color: #1f1f1f;
+  }
+
+  .gradient-btn {
+    background: linear-gradient(90deg, #00d084, #00ffa3);
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    color: black;
+    font-weight: 600;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .gradient-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 255, 163, 0.2);
+  }
+  .modern-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 300;
+}
+</style>
+{% endblock %}

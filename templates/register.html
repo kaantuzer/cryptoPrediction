@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}Kayıt Ol{% endblock %}
+
+{% block content %}
+<!-- Koyu degrade arka plan -->
+<div class="bg-dark-gradient"></div>
+
+<!-- Merkez kart -->
+<div class="min-vh-100 d-flex align-items-center justify-content-center">
+  <div class="register-card glassmorph p-5 rounded-4 shadow-lg" style="max-width: 420px; width: 100%;">
+
+    <!-- Başlık -->
+    <h3 class="mb-4 text-center fw-bold text-white">
+      Yeni Hesap Oluştur
+    </h3>
+
+    <!-- Kayıt Formu -->
+    <form method="post">
+
+      <!-- Kullanıcı Adı -->
+      <div class="form-group mb-4">
+        <label class="form-label text-light">Kullanıcı Adı</label>
+        <div class="input-icon">
+          <i class="bi bi-person"></i>
+          <input type="text" name="username" class="form-control modern-input" placeholder="kullaniciadi" required>
+        </div>
+      </div>
+
+      <!-- E-Posta -->
+      <div class="form-group mb-4">
+        <label class="form-label text-light">E-Posta</label>
+        <div class="input-icon">
+          <i class="bi bi-envelope-at"></i>
+          <input type="email" name="email" class="form-control modern-input" placeholder="example@mail.com" required>
+        </div>
+      </div>
+
+      <!-- Şifre -->
+      <div class="form-group mb-5">
+        <label class="form-label text-light">Şifre</label>
+        <div class="input-icon">
+          <i class="bi bi-lock-fill"></i>
+          <input type="password" name="password" class="form-control modern-input" placeholder="••••••••" required>
+        </div>
+      </div>
+
+      <!-- Kayıt Butonu -->
+      <button type="submit" class="btn gradient-btn w-100 fw-semibold">Kayıt Ol</button>
+    </form>
+
+    <!-- Giriş Linki -->
+    <p class="mt-4 text-center text-light small">
+      Zaten hesabın var mı?
+      <a href="{{ url_for('login') }}" class="text-success text-decoration-none fw-semibold">Giriş Yap</a>
+    </p>
+  </div>
+</div>
+
+<!-- Stil -->
+<style>
+  /* Koyu degrade arka plan */
+  .bg-dark-gradient {
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh; width: 100vw;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    z-index: -1;
+  }
+
+  /* Cam efekti */
+  .glassmorph {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Input ikonu */
+  .input-icon { position: relative; }
+  .input-icon i {
+    position: absolute;
+    top: 50%; left: 12px;
+    transform: translateY(-50%);
+    color: #ccc;
+    font-size: 1rem;
+  }
+
+  /* Modern koyu input */
+  .modern-input {
+    padding-left: 36px;
+    border-radius: 10px;
+    background-color: #1c1c1c;
+    color: white !important;
+    border: 1px solid #444;
+    transition: all .3s ease;
+  }
+  .modern-input:focus {
+    border-color: #00ffa3;
+    box-shadow: 0 0 0 2px rgba(0, 255, 163, 0.3);
+    background-color: #1f1f1f;
+  }
+  .modern-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 300;
+  }
+
+  /* Neon geçişli buton */
+  .gradient-btn {
+    background: linear-gradient(90deg, #00d084, #00ffa3);
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    color: black;
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .gradient-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 255, 163, 0.25);
+  }
+</style>
+{% endblock %}

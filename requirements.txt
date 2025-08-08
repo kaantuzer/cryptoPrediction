@@ -1,0 +1,21 @@
+# ---------------- Flask ve eklentileri ----------------
+Flask==3.0.2
+Flask-Login==0.6.3
+Flask-SQLAlchemy==3.1.1
+
+# ---------------- Veri / TA ---------------------------
+pandas==2.2.2
+numpy==1.26.4
+ta==0.10.2
+python-binance==1.0.17   # Binance API (genel veri için key'siz çalışır)
+
+# ---------------- RL / Gym ----------------------------
+gymnasium==0.29.1
+stable-baselines3==2.3.2
+
+# ---------------- PyTorch -----------------------------
+# CPU sürümü – her makinede çalışır (≈160 MB)
+torch==2.2.2+cpu       --extra-index-url https://download.pytorch.org/whl/cpu
+
+# ---------------- Görselleştirme (opsiyonel) ----------
+matplotlib==3.8.4       # local test grafikleri için; Chart.js web tarafında CDN ile geliyor

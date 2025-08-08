@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% block title %}{{ symbol }} – {{ interval }} Backtest{% endblock %}
+
+{% block content %}
+<!-- Koyu degrade arka plan -->
+<div class="bg-dark-gradient"></div>
+
+<!-- Merkez kart -->
+<div class="min-vh-100 d-flex align-items-center justify-content-center">
+  <div class="backtest-card glassmorph p-5 rounded-4 shadow-lg"
+       style="max-width: 960px; width: 100%;">
+
+    <!-- BAŞLIK -->
+    <h2 class="mb-4 text-center fw-bold text-white">
+      {{ symbol }} – {{ interval }} Backtest
+    </h2>
+
+    <!-- ÖZET -->
+    <div class="row text-light text-center mb-5">
+      <div class="col-6 col-md-4 offset-md-2 mb-3 mb-md-0">
+        <span class="d-block small">Final Portföy</span>
+        <span class="fs-4 fw-semibold text-white">
+          {{ "%.2f"|format(result.finalPortfolio) }} USDT
+        </span>
+      </div>
+      <div class="col-6 col-md-4">
+        <span class="d-block small">Net Kâr</span>
+        <span class="fs-4 fw-semibold"
+              style="color: {{ 'lime' if result.netProfit>=0 else '#ff4d4f' }};">
+          {{ "%.2f"|format(result.netProfit) }} USDT
+        </span>
+      </div>
+    </div>
+
+    <!-- GRAFİK -->
+    <div class="mb-5">
+      <canvas id="tradeChart" height="200"></canvas>
+    </div>
+
+    <!-- TRANSACTIONS TABLOSU -->
+    <div class="table-responsive mb-4" style="max-height:320px;">
+      <table class="table table-sm table-dark table-striped align-middle small">
+        <thead style="position: sticky; top:0;" class="table-light text-dark">
+          <tr>
+            <th>Step</th><th>Fiyat (USDT)</th><th>İşlem</th>
+            <th>USD Bakiye</th><th>COIN Held</th><th>Toplam USD</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in result.rows %}
+          <tr>
+            <td>{{ r.step }}</td>
+            <td>{{ "%.2f"|format(r.price) }}</td>
+            <td>
+              {% if   r.action == 1 %}
+                <span class="text-success fw-bold">BUY</span>
+              {% elif r.action == 2 %}
+                <span class="text-danger fw-bold">SELL</span>
+              {% else %}
+                WAIT
+              {% endif %}
+            </td>
+            <td>{{ "%.2f"|format(r.balance) }}</td>
+            <td>{{ "%.6f"|format(r.btc_held) }}</td>
+            <td>{{ "%.2f"|format(r.total_usd) }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- GERİ BUTONU -->
+    <a href="{{ url_for('dashboard') }}"
+       class="btn gradient-btn w-100 fw-semibold">
+      ← Dashboard'a Dön
+    </a>
+  </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  /*  Jinja'dan gelen Python listeleri -> geçerli JS dizileri  */
+  const steps = {{ result.rows   | map(attribute='step')  | list | tojson | safe }};
+  const price = {{ result.prices                       | tojson | safe }};
+  const buys  = {{ result.buys                         | tojson | safe }};
+  const sells = {{ result.sells                        | tojson | safe }};
+
+  new Chart(
+    document.getElementById('tradeChart'),
+    {
+      type : 'line',
+      data : {
+        labels : steps,
+        datasets : [
+          { label:'Price', data:price, borderWidth:1, fill:false },
+          { label:'BUY',   data:buys,  showLine:false,
+            pointStyle:'triangle', pointBackgroundColor:'lime', pointRadius:5 },
+          { label:'SELL',  data:sells, showLine:false,
+            pointStyle:'rectRot',  pointBackgroundColor:'#ff4d4f', pointRadius:5 }
+        ]
+      },
+      options : {
+        plugins:{ legend:{ display:true } },
+        scales : {
+          x:{ title:{ display:true, text:'Step', color:'#ccc' }, ticks:{ color:'#ccc' } },
+          y:{ title:{ display:true, text:'USDT', color:'#ccc' }, ticks:{ color:'#ccc' } }
+        }
+      }
+    });
+</script>
+
+<!-- Stil -->
+<style>
+  /* Koyu degrade arka plan */
+  .bg-dark-gradient {
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh; width: 100vw;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    z-index: -1;
+  }
+
+  /* Cam efekti */
+  .glassmorph {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Neon geçişli buton */
+  .gradient-btn {
+    background: linear-gradient(90deg, #00d084, #00ffa3);
+    border: none;
+    border-radius: 12px;
+    color: black;
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .gradient-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 255, 163, 0.25);
+  }
+</style>
+{% endblock %}

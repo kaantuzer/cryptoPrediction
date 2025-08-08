@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Dashboard – Coin Seçimi{% endblock %}
+
+{% block content %}
+<!-- Arka plan efekti -->
+<div class="bg-dark-gradient"></div>
+
+<!-- Orta kısım -->
+<div class="min-vh-100 d-flex align-items-center justify-content-center">
+  <div class="dashboard-card glassmorph p-5 rounded-4 shadow-lg" style="max-width: 680px; width: 100%;">
+
+    <!-- Başlık -->
+    <h2 class="mb-4 text-center fw-bold text-white">
+      Hoş geldin, {{ current_user.username }}!
+    </h2>
+    <p class="lead text-light text-center mb-5">
+      İşlem yapmak istediğin kripto parayı seç:
+    </p>
+
+    <!-- Coin kartları -->
+    <div class="row g-4">
+      {% for c in coins %}
+        <div class="col-6 col-md-4">
+          <a href="{{ url_for('select_interval', symbol=c.symbol) }}" class="text-decoration-none">
+            <div class="coin-card glassmorph p-3 h-100 d-flex flex-column align-items-center justify-content-center">
+              <span style="font-size:2rem;">{{ c.icon }}</span>
+              <span class="mt-2 text-white fw-semibold">{{ c.name }}</span>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Çıkış butonu -->
+    <a href="{{ url_for('logout') }}" class="btn gradient-btn w-100 fw-semibold mt-5">
+      Çıkış Yap
+    </a>
+  </div>
+</div>
+
+<!-- Stil -->
+<style>
+  /* Koyu degrade arka plan */
+  .bg-dark-gradient {
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh; width: 100vw;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    z-index: -1;
+  }
+
+  /* Cam efekti */
+  .glassmorph {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Coin kartı */
+  .coin-card {
+    transition: transform .25s ease, box-shadow .25s ease;
+    border-radius: 16px;
+  }
+  .coin-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 255, 163, 0.15);
+  }
+
+  /* Neon geçişli buton */
+  .gradient-btn {
+    background: linear-gradient(90deg, #00d084, #00ffa3);
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    color: black;
+    font-weight: 600;
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .gradient-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 255, 163, 0.25);
+  }
+</style>
+{% endblock %}
